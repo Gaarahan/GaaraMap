@@ -9,7 +9,7 @@
       <mt-cell v-show="hasLogin" :is-link="true" title="个人信息" :to="{name: 'edit'}"></mt-cell>
 <!--      <mt-cell :is-link="true" title="设置中心" :to="{name: 'setting'}"></mt-cell>-->
       <mt-cell :is-link="true" title="关于应用" :to="{name: 'about'}"></mt-cell>
-      <mt-cell v-show="hasLogin">
+      <mt-cell :v-show="hasLogin">
         <mt-button size="large" @click="logout">退出登录</mt-button>
       </mt-cell>
     </div>
@@ -19,7 +19,7 @@
 <script>
   import UserHeader from '../../components/UserHeader.vue';
   import service from "../../service";
-  import { mapState } from 'vuex'
+  import { mapState, mapActions } from 'vuex'
 
   export default {
     name: "Mine",
@@ -36,14 +36,7 @@
       this.fetchUserInfo()
     },
     methods: {
-      fetchUserInfo () {
-        service.fetchUserInfo()
-            .then(res => {
-              if (res.data.status === 'success') {
-                this.$store.commit('setLoginInfo', res.data)
-              }
-            })
-      },
+      ...mapActions(["fetchUserInfo"]),
       logout () {
         service.logout()
         .then( res => {

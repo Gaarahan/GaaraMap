@@ -11,9 +11,6 @@ class User {
     next()
   }
 
-  /**
-   * 获取friends以及用户资料
-   */
   getAllInfo (ctx, next) {
     const username = ctx.session.username
     if (!username) {
@@ -22,8 +19,8 @@ class User {
         message: 'no login'
       }
     } else {
-      const user = UserService.getInfoByName(username)
-      ctx.body = Object.assign({}, user.getInfo(), {
+      const userInfo = UserService.getAllInfoByName(username)
+      ctx.body = Object.assign({}, userInfo, {
         status: 'success'
       })
     }
@@ -68,6 +65,27 @@ class User {
         status: 'success',
         message: 'username can be use'
       }
+    }
+    next()
+  }
+
+  editPassword (ctx, next) {
+    const { password, newPassword } = ctx.request.body
+    const username = ctx.session.username
+    const res = UserService.editPassword({ username, password, newPassword })
+    if (res) {
+      ctx.body = { status: 'success' }
+    }
+    next()
+  }
+
+  editUsername (ctx, next) {
+    const { username: newUsername } = ctx.request.body
+    const username = ctx.session.username
+    const res = UserService.editUsername({ username, newUsername })
+    if (res) {
+      ctx.session.username = newUsername
+      ctx.body = { status: 'success' }
     }
     next()
   }

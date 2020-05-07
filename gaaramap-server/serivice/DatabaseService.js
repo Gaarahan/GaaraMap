@@ -2,16 +2,22 @@ const database = require('../data/database')
 const CustomError = require('../utils/CustomError')
 const fs = require('fs')
 const path = require('path')
+const _ = require('lodash')
 
 class DatabaseService {
   constructor (database) {
     this._database = database || {
-      users: {}
+      users: {},
+      friends: {}
     }
   }
 
   queryUserByUsername (name) {
-    return this.database.users[name] || null
+    return _.cloneDeep(this.database.users[name]) || null
+  }
+
+  queryFriendsByUsername (name) {
+    return _.cloneDeep(this.database.friends[name]) || null
   }
 
   isNameExist (name) {
@@ -34,6 +40,45 @@ class DatabaseService {
     Object.assign(this.database.users, {
       [userData.username]: userData
     })
+    Object.assign(this.database.friends, {
+      [userData.username]: {
+        friendList: [],
+        friendReq: []
+      }
+    })
+    return this.writeDatabase()
+  }
+
+  editUserInfo (newUser) {
+    const userData = newUser.getRegisterInfo()
+    Object.assign(this.database.users, {
+      [newUser.username]: userData
+    })
+    return this.writeDatabase()
+  }
+
+  changeUsername ({ username, newUsername }) {
+    // move user info
+    const userData = this.queryUserByUsername(username)
+    userData.username = newUsername
+    Reflect.deleteProperty(this.database.users, username)
+
+    Object.assign(this.database.users, {
+      [newUsername]: userData
+    })
+    // move friends info
+    const friendsData = this.queryFriendsByUsername(username)
+    Reflect.deleteProperty(this.database.friends, username)
+
+    Object.assign(this.database.friends, {
+      [newUsername]: friendsData
+    })
+
+    return this.writeDatabase()
+  }
+
+  updateFriendsData (data) {
+    this.database.friends = Object.assign(this.database.friends, data)
     return this.writeDatabase()
   }
 

@@ -4,9 +4,9 @@
       <mt-tab-container-item id="tab-main">
         <Main></Main>
       </mt-tab-container-item>
-<!--      <mt-tab-container-item id="tab-friends">-->
-<!--        <Friends></Friends>-->
-<!--      </mt-tab-container-item>-->
+      <mt-tab-container-item id="tab-friends">
+        <Friends></Friends>
+      </mt-tab-container-item>
       <mt-tab-container-item id="tab-mine">
         <Mine></Mine>
       </mt-tab-container-item>
@@ -15,9 +15,9 @@
       <mt-tab-item id="tab-main">
         首页
       </mt-tab-item>
-<!--      <mt-tab-item id="tab-friends">-->
-<!--        朋友-->
-<!--      </mt-tab-item>-->
+      <mt-tab-item id="tab-friends">
+        朋友
+      </mt-tab-item>
       <mt-tab-item id="tab-mine">
         我的
       </mt-tab-item>
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-  // import Friends from "./Friends";
+  import Friends from "./Friends/Friends";
   import Main from "./Main";
   import Mine from "./Mine";
 
@@ -38,7 +38,7 @@
       }
     },
     components: {
-      // Friends,
+      Friends,
       Main,
       Mine
     }

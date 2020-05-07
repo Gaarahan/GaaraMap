@@ -23,13 +23,19 @@ class UserService {
     return new User(result)
   }
 
-  getInfoByName (name) {
+  getAllInfoByName (name) {
     const result = DatabaseService.queryUserByUsername(name)
     if (!result) {
       throw new CustomError('找不到对应用户,请检查username')
     }
 
-    return new User(result)
+    const userInfo = new User(result).getInfo()
+    const friends = DatabaseService.queryFriendsByUsername(name)
+
+    return {
+      userInfo,
+      friends
+    }
   }
 
   signIn (info) {
@@ -62,6 +68,28 @@ class UserService {
 
   isNameExisted (name) {
     return DatabaseService.isNameExist(name)
+  }
+
+  editUsername (info) {
+    return DatabaseService.changeUsername(info)
+  }
+
+  editPassword (info) {
+    const { username, password, newPassword } = info
+    if (!password || !newPassword) {
+      throw new CustomError('密码不能为空')
+    }
+
+    const result = DatabaseService.queryUserByUsername(username)
+    if (!result) {
+      throw new CustomError('用户不存在')
+    }
+    if (result.password !== md5(password)) {
+      throw new CustomError('旧密码错误')
+    }
+
+    result.password = newPassword
+    return DatabaseService.editUserInfo(new User(result))
   }
 }
 
