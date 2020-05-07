@@ -1,14 +1,18 @@
-const database = require('../data/database')
 const CustomError = require('../utils/CustomError')
 const fs = require('fs')
 const path = require('path')
 const _ = require('lodash')
 
 class DatabaseService {
-  constructor (database) {
-    this._database = database || {
-      users: {},
-      friends: {}
+  constructor () {
+    try {
+      const database = fs.readFileSync('../data/database.json', 'utf-8')
+      this._database = JSON.parse(database)
+    } catch (e) {
+      this._database = {
+        users: {},
+        friends: {}
+      }
     }
   }
 
@@ -91,4 +95,4 @@ class DatabaseService {
   }
 }
 
-module.exports = new DatabaseService(database)
+module.exports = new DatabaseService()

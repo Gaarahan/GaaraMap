@@ -1,7 +1,7 @@
 import axios from 'axios';
 const service = axios.create({
-  // baseURL: 'https://www.gaarahan.cn:8088', // Server
-  baseURL: 'https://localhost:8088', // Dev
+  baseURL: 'https://www.gaarahan.cn:8088', // Server
+  // baseURL: 'https://localhost:8088', // Dev
   withCredentials: true
 });
 
