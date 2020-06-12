@@ -8,6 +8,7 @@ import Account from "../pages/Account/Account";
 import EditProfile from "../pages/EditProfile/EditProfile";
 import Setting from "../pages/Setting/Setting";
 import About from "../pages/About/About";
+import Chat from "../pages/Chat/Chat";
 
 export default new VueRouter({
   routes: [
@@ -31,6 +32,7 @@ export default new VueRouter({
     },
     { path: '/editProfile', name: 'edit', component: EditProfile },
     { path: '/setting', name: 'setting', component: Setting },
-    { path: '/about', name: 'about', component: About }
+    { path: '/about', name: 'about', component: About },
+    { path: '/chat', name: 'chat', component: Chat }
   ]
 })

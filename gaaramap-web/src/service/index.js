@@ -1,7 +1,8 @@
 import axios from 'axios';
+import {SERVER_URL} from "../constants";
+
 const service = axios.create({
-  baseURL: 'https://www.gaarahan.cn:8088', // Server
-  // baseURL: 'https://localhost:8088', // Dev
+  baseURL: SERVER_URL,
   withCredentials: true
 });
 

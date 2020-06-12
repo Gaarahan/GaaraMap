@@ -9,7 +9,7 @@
       <mt-cell v-show="hasLogin" :is-link="true" title="个人信息" :to="{name: 'edit'}"></mt-cell>
 <!--      <mt-cell :is-link="true" title="设置中心" :to="{name: 'setting'}"></mt-cell>-->
       <mt-cell :is-link="true" title="关于应用" :to="{name: 'about'}"></mt-cell>
-      <mt-cell :v-show="hasLogin">
+      <mt-cell v-show="hasLogin">
         <mt-button size="large" @click="logout">退出登录</mt-button>
       </mt-cell>
     </div>

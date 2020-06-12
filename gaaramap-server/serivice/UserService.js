@@ -2,6 +2,7 @@ const md5 = require('md5')
 const Schema = require('validate')
 
 const DatabaseService = require('./DatabaseService')
+const SocketService = require('./SocketService')
 const User = require('../models/User')
 const CustomError = require('../utils/CustomError')
 
@@ -29,8 +30,16 @@ class UserService {
       throw new CustomError('找不到对应用户,请检查username')
     }
 
+    const friendsInfo = DatabaseService.queryFriendsByUsername(name)
     const userInfo = new User(result).getInfo()
-    const friends = DatabaseService.queryFriendsByUsername(name)
+    const friends = Object.assign({}, {
+      friendList: friendsInfo.friendList.map(itm => {
+        return {
+          name: itm,
+          status: SocketService.checkOnlineStatus(itm)
+        }
+      })
+    })
 
     return {
       userInfo,

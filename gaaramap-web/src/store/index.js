@@ -1,6 +1,9 @@
 import Vuex from 'vuex';
 import Vue from "vue";
 import service from "../service";
+import io from 'socket.io-client';
+import { SERVER_URL } from "../constants";
+
 const defaultData = {
   userInfo: {
     username: '',
@@ -11,23 +14,15 @@ const defaultData = {
     friendList: [],
     friendReq: []
   },
-  hasLogin: false
+  hasLogin: false,
+  socket: null
 }
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    userInfo: {
-      username: '',
-      registerTime: 0,
-      email: ''
-    },
-    friends: {
-      friendList: [],
-      friendReq: []
-    },
-    hasLogin: false
+    ...defaultData
   },
   getters: {
     profileFormInfo: state => {
@@ -43,15 +38,31 @@ export default new Vuex.Store({
     setLoginInfo (state, val) {
       state.hasLogin = true;
       state.userInfo = Object.assign({}, val.userInfo);
-      state.friends =  Object.assign({
-        friendList: [],
-        friendReq: []
-      }, val.friends)
+      if (val.friends) {
+        const {friendList, friendReq} = val.friends
+        state.friends =  {
+          friendList: friendList || [],
+          friendReq: friendReq || []
+        }
+      }
     },
     setLogout (state) {
       state.hasLogin = false;
       state.userInfo = Object.assign({}, defaultData.userInfo);
       state.friends = Object.assign({}, defaultData.friends);
+    },
+    setSocket (state, val) {
+      state.socket = val
+    },
+    destroySocket (state) {
+      state.socket.close()
+      state.socket = null
+    },
+    setFriendsOnlineStatus(state, {name, status}) {
+      const friend = state.friends.friendList.find(itm => itm.name === name)
+      if (friend) {
+        friend.status = status
+      }
     }
   },
   actions: {
@@ -69,5 +80,14 @@ export default new Vuex.Store({
         commit('setLoginInfo', res.data)
       }
     },
+    async createSocket ({commit}) {
+      const socket = io(SERVER_URL, {
+        reconnectionAttempts: 3
+      })
+      commit('setSocket', socket)
+    },
+    async destroySocket ({commit}) {
+      commit('destroySocket')
+    }
   }
 })

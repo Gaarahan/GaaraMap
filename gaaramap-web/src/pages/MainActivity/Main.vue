@@ -176,7 +176,7 @@
         }
       },
       changeAttractionMessage(attrMessage) {
-        if (attrMessage.id === 'GMAP_0') {
+        if (this.curAttrSquareId && attrMessage.id === 'GMAP_0') {
           this.map.remove(this.curAttrSquareId);
         }
         else if (attrMessage.id !== this.curAttrSquareId) {

@@ -7,7 +7,8 @@
   "license": "MIT",
   "scripts": {
     "start": "nodemon index.js",
-    "inspect": "nodemon --inspect-brk index.js"
+    "inspect-brk": "nodemon --inspect-brk index.js",
+    "inspect": "nodemon --inspect index.js"
   },
   "dependencies": {
     "@koa/cors": "^2.2.3",
@@ -17,6 +18,7 @@
     "koa-session": "^5.13.1",
     "lodash": "^4.17.15",
     "md5": "^2.2.1",
+    "socket.io": "^2.3.0",
     "validate": "^5.1.0"
   },
   "devDependencies": {

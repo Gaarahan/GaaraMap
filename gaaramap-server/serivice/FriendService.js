@@ -1,6 +1,6 @@
 const DatabaseService = require('./DatabaseService')
 const CustomError = require('../utils/CustomError')
-const FriendStatus = require('../utils/FriendStatus')
+const { FRIEND_STATUS } = require('../constants')
 
 class FriendService {
   addFriend ({ username, friendName }) {
@@ -12,12 +12,12 @@ class FriendService {
 
     friendListObj[friendName].friendReq.push({
       name: username,
-      status: FriendStatus.pending
+      status: FRIEND_STATUS.pending
     })
 
     friendListObj[username].friendReq.push({
       name: friendName,
-      status: FriendStatus.waitingForApprove
+      status: FRIEND_STATUS.waitingForApprove
     })
 
     return DatabaseService.updateFriendsData(friendListObj)
@@ -31,10 +31,10 @@ class FriendService {
     }
 
     friendListObj[friendName].friendList.push(username)
-    friendListObj[friendName].friendReq.find(itm => itm.name === username).status = FriendStatus.approved
+    friendListObj[friendName].friendReq.find(itm => itm.name === username).status = FRIEND_STATUS.approved
 
     friendListObj[username].friendList.push(friendName)
-    friendListObj[username].friendReq.find(itm => itm.name === friendName).status = FriendStatus.approved
+    friendListObj[username].friendReq.find(itm => itm.name === friendName).status = FRIEND_STATUS.approved
 
     return DatabaseService.updateFriendsData(friendListObj)
   }
@@ -46,9 +46,9 @@ class FriendService {
       throw new CustomError('该用户名称不存在')
     }
 
-    friendListObj[friendName].friendReq.find(itm => itm.name === username).status = FriendStatus.rejected
+    friendListObj[friendName].friendReq.find(itm => itm.name === username).status = FRIEND_STATUS.rejected
 
-    friendListObj[username].friendReq.find(itm => itm.name === friendName).status = FriendStatus.rejected
+    friendListObj[username].friendReq.find(itm => itm.name === friendName).status = FRIEND_STATUS.rejected
 
     return DatabaseService.updateFriendsData(friendListObj)
   }

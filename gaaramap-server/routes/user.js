@@ -5,7 +5,7 @@ class User {
     const loginInfo = ctx.request.body
     const user = UserService.login(loginInfo)
     ctx.session.username = user.username
-    ctx.body = Object.assign({}, user.getInfo(), {
+    ctx.body = Object.assign({}, UserService.getAllInfoByName(user.username), {
       status: 'success'
     })
     next()

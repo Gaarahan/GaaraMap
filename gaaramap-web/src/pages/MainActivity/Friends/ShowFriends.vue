@@ -21,28 +21,47 @@
     </mt-cell>
     <mt-cell
         title="添加新朋友"
-        :is-link="hasLogin"
+        v-if="hasLogin"
+        :is-link="true"
         :to="{name: 'addFriends'}"
-        :class="{disabled: !hasLogin}"
         icon="more">
       <img slot="icon" src="../../../assets/add-friends.png"
            width="200" height="200"
            class="head-img"
            alt="add-head-img"
       >
-      <router-link v-if="!hasLogin" :to="{name: 'login'}">请登录</router-link>
     </mt-cell>
-    <mt-cell v-for="(itm, i) in filteredFriends" :title="itm" icon="more" :key="i">
+    <mt-cell
+        title="请登录"
+        v-if="!hasLogin"
+        :is-link="true"
+        :to="{name: 'login'}"
+        icon="more">
+      <img slot="icon" src="../../../assets/add-friends.png"
+           width="200" height="200"
+           class="head-img"
+           alt="add-head-img"
+      >
+    </mt-cell>
+    <mt-cell v-for="(itm, i) in filteredFriends"
+             :title="itm.name" icon="more" :key="i"
+             :to="{name: 'chat', params: {chatWith: itm}}"
+    >
       <img slot="icon" src="../../../assets/defaultHeadPic.png"
            width="200" height="200"
            class="head-img"
            alt="friend-head-img"
       >
+      <span class="status" v-if="itm.status === ONLINE_STATUS.online">
+        <span class="online-circle" ></span>
+        {{`正在游览: ''`}}
+      </span>
     </mt-cell>
   </div>
 </template>
 
 <script>
+  import { ONLINE_STATUS } from "../../../constants";
   import { mapState } from 'vuex'
   export default {
     name: "ShowFriends",
@@ -52,13 +71,16 @@
         "hasLogin"
       ]),
       filteredFriends () {
-        return this.friends.friendList.filter(val => !this.search || val.includes(this.search))
+        return this.friends.friendList.filter(val =>
+            !this.search || val.name.includes(this.search)
+        )
       }
     },
     data () {
       return {
         showSearch: false,
-        search: ''
+        search: '',
+        ONLINE_STATUS
       }
     },
     methods: {
@@ -90,6 +112,13 @@
     .head-img {
       width: 20px;
       height: 20px;
+    }
+    .online-circle {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: #00f05f;
     }
   }
 </style>

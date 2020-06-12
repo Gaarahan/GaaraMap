@@ -6,9 +6,11 @@ const _ = require('lodash')
 class DatabaseService {
   constructor () {
     try {
-      const database = fs.readFileSync('../data/database.json', 'utf-8')
+      const database = fs.readFileSync(path.join(__dirname, '../data/database.json'), 'utf-8')
       this._database = JSON.parse(database)
     } catch (e) {
+      console.log('read database file failed, make new database with null: ')
+      console.log(e)
       this._database = {
         users: {},
         friends: {}

@@ -27,11 +27,12 @@
             ></el-input>
           </el-form-item>
           <el-form-item>
+            <!--取消修改用户名设定-->
             <el-button
                 type="primary"
                 size="small"
                 @click="onEditUsername"
-                v-show="!showEditPasswordForm"
+                v-if="false"
             >{{!this.showEditUsernameForm?'修改用户名':'确认修改'}}</el-button>
             <el-button
                 type="primary"
