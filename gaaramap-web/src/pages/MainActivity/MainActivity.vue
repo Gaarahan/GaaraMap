@@ -27,7 +27,7 @@
 
 <script>
   import Friends from "./Friends/Friends";
-  import Main from "./Main";
+  import Main from "./Main/Main";
   import Mine from "./Mine";
 
   export default {

@@ -14,15 +14,17 @@ a, a:link, a:visited, a:active, a:hover {
   text-decoration: none;
 }
 
+/*hide amap logo*/
+.amap-copyright, .amap-logo {
+  display: none!important;
+}
+
 /*change the default style of components*/
 .el-form-item__label{
   font-weight: 700;
 }
 .el-form-item{
   margin-bottom: 1em!important;
-}
-{
-
 }
 .el-input--small input{
   border-radius: 0;

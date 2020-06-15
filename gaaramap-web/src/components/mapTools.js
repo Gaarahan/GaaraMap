@@ -26,5 +26,5 @@ export function refreshCurrentAttractionSquare(map, attr) {
 
   map.add(polygon);
   map.setFitView([ polygon ]);
-  return attr.id;
+  return polygon;
 }
