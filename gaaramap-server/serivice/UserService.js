@@ -39,7 +39,7 @@ class UserService {
           status: SocketService.checkOnlineStatus(itm)
         }
       })
-    })
+    }, friendsInfo)
 
     return {
       userInfo,

@@ -15,7 +15,8 @@ const defaultData = {
     friendReq: []
   },
   hasLogin: false,
-  socket: null
+  socket: null,
+  mainPage: null
 }
 
 Vue.use(Vuex);
@@ -63,6 +64,9 @@ export default new Vuex.Store({
       if (friend) {
         friend.status = status
       }
+    },
+    storeMain (state, ref) {
+      state.mainPage = ref
     }
   },
   actions: {

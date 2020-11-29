@@ -45,7 +45,6 @@
     </mt-cell>
     <mt-cell v-for="(itm, i) in filteredFriends"
              :title="itm.name" icon="more" :key="i"
-             :to="{name: 'chat', params: {chatWith: itm}}"
     >
       <img slot="icon" src="../../../assets/defaultHeadPic.png"
            width="200" height="200"
@@ -54,7 +53,8 @@
       >
       <span class="status" v-if="itm.status === ONLINE_STATUS.online">
         <span class="online-circle" ></span>
-        {{`正在游览: ''`}}
+        <span class="online-text">在线   </span>
+        <el-button size="mini" plain="plain" type="primary" class="text" @click="showFriendPath(itm.name)"> 查看位置 </el-button>
       </span>
     </mt-cell>
   </div>
@@ -95,6 +95,11 @@
       cancelSearch () {
         this.search = ''
         this.toggleSearch()
+      },
+      showFriendPath (name) {
+        this.$store.state.mainPage.showPathTo({
+          name: name
+        })
       }
     }
   }
@@ -120,5 +125,8 @@
       border-radius: 50%;
       background-color: #00f05f;
     }
+  }
+  .status .text {
+    font-size: small;
   }
 </style>

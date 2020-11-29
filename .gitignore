@@ -117,3 +117,4 @@ dist
 *.iml
 out
 gen
+/gaaramapAndroid/android/app/src/main/assets/

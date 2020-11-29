@@ -2,7 +2,7 @@
   <div id="main-activity">
     <mt-tab-container :swipeable="false" v-model="selected" class="content">
       <mt-tab-container-item id="tab-main">
-        <Main></Main>
+        <Main ref="mainPage"></Main>
       </mt-tab-container-item>
       <mt-tab-container-item id="tab-friends">
         <Friends></Friends>
@@ -41,6 +41,9 @@
       Friends,
       Main,
       Mine
+    },
+    mounted () {
+      this.$store.commit('storeMain', this.$refs["mainPage"])
     }
   }
 </script>

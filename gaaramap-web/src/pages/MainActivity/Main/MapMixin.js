@@ -104,6 +104,10 @@ export default  {
       }
     },
     changeAttractionMessage(geo) {
+      if (this.watchingAttractions) {
+        return false
+      }
+
       const attrMessage = getCurAttractionMessage(geo)
 
       if ( this.curAttrSquareId) {
@@ -178,6 +182,17 @@ export default  {
       else {
         searchPath()
       }
+    },
+    showPathTo(msg) {
+      this.$parent.$parent.$parent.$data.selected = "tab-main"
+      const m = {
+        name: `${msg.name}所在`,
+        edge: [[113.828298,24.220748]],
+        id: "new"
+      }
+      setTimeout(() => {
+        this.showPath(m)
+      }, 100)
     }
   }
 }
