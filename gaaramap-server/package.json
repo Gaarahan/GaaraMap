@@ -18,7 +18,7 @@
     "koa-session": "^5.13.1",
     "lodash": "^4.17.15",
     "md5": "^2.2.1",
-    "socket.io": "^2.3.0",
+    "socket.io": "^2.4.0",
     "validate": "^5.1.0"
   },
   "devDependencies": {
